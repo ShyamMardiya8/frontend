@@ -1,4 +1,4 @@
-import { Facebook, Instagram, Mail, Twitter } from "lucide-react";
+import { Facebook, Instagram, Twitter } from "lucide-react";
 import { footerLinks } from "../constatnt/FooterValue";
 
 const Footer = () => {

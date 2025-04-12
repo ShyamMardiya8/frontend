@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, ShoppingCart, User } from "lucide-react";
 import { shopSubmenu } from "../constatnt/value";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -73,7 +74,9 @@ const Navbar = () => {
 
         {/* Icons */}
         <div className="flex items-center gap-4">
+          <Link to='/cart'>
           <ShoppingCart className="w-5 h-5 cursor-pointer" />
+          </Link>
           <User className="w-5 h-5 cursor-pointer" />
           <button
             onClick={() => setMenuOpen(true)}
@@ -109,12 +112,12 @@ const Navbar = () => {
             <nav className="mt-8 space-y-4 text-sm">
               <details>
                 <summary className="cursor-pointer">Shop</summary>
-                <div className="pl-4 mt-2 space-y-1">
+                <div className="pl-4 mt-2 space-y-1 ">
                   {shopSubmenu.map((item, index) => (
                     <a
                       key={index}
                       href="#"
-                      className="block hover:underline text-gray-700"
+                      className="block hover:underline text-gray-700 z-10"
                     >
                       {item}
                     </a>

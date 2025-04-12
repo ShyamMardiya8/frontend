@@ -1,11 +1,52 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X, Filter } from "lucide-react";
-import { categories, products } from "../constatnt/Products";
+// import { categories, products } from "../constatnt/Products";
+import { GET_PRODUCTS } from "../controllers/functions";
+import { useNavigate } from "react-router-dom";
+
+
+interface Product {
+  _id: string;
+  product_Name: string;
+  image: string[];
+  decripation: string;
+  price: string;
+  quantity: string;
+  category?: string;
+}
 
 
 export default function Shop() {
   const [showFilters, setShowFilters] = useState(false);
+  const [product, setProduct] = useState<Product[]>([])
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const navigate = useNavigate()
+  const filteredProducts = selectedCategory
+  ? product.filter(product => product.category === selectedCategory)
+  : product;
 
+  const categories = [...new Set(product.map(product => product.category))]; // Unique categories
+
+  console.log("cat", categories)
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+  };
+
+  const fetchData = async  () => {
+    const response = await GET_PRODUCTS()
+    setProduct(response)
+    console.log("product", response)
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+
+  const handleClick = (id : any) => {
+    console.log("id", id)
+    navigate(`/product/${id}`)
+  }
   return (
     <div className="flex flex-col lg:flex-row max-w-7xl mx-auto p-4">
       {/* Mobile Filter Button */}
@@ -32,24 +73,25 @@ export default function Shop() {
 
         <h3 className="text-lg font-semibold mb-2">Categories</h3>
         <ul className="space-y-2">
-          {categories.map((cat) => (
+          {categories.map((cat : any) => (
             <li
-              key={cat}
+              key={cat?._id}
               className="text-gray-700 hover:text-black cursor-pointer"
+              onClick={() => handleCategoryClick(cat)}
             >
               {cat}
             </li>
           ))}
         </ul>
 
-        <div className="mt-6">
+        {/* <div className="mt-6">
           <h3 className="text-lg font-semibold mb-2">Price</h3>
           <div className="flex items-center gap-2">
             <span>$50</span>
             <input type="range" className="w-full" />
             <span>$200</span>
           </div>
-        </div>
+        </div> */}
       </aside>
 
       {/* Product List */}
@@ -60,34 +102,28 @@ export default function Shop() {
         </div>
 
         <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-          {products.map((product, idx) => (
-            <div key={idx} className="border rounded-lg p-4 bg-white">
-              <img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-60 object-cover mb-4 rounded"
-              />
-              <h4 className="font-semibold mb-1 text-sm md:text-base">
-                {product.name}
-              </h4>
-              <div className="flex items-center text-yellow-500 text-sm mb-1">
-                ⭐ {product.rating}
-              </div>
-              <div className="text-base font-bold">
-                {product.price}
-                {product.oldPrice && (
-                  <span className="text-gray-400 line-through ml-2 text-sm">
-                    {product.oldPrice}
-                  </span>
-                )}
-                {product.discount && (
-                  <span className="text-red-500 ml-2 text-sm">
-                    -{product.discount}
-                  </span>
-                )}
-              </div>
-            </div>
-          ))}
+        {filteredProducts.map((product, idx) => (
+      <div key={product._id || idx} className="border rounded-lg p-4 bg-white" onClick={() => handleClick(product._id)}>
+        <img
+          src={
+            product.image?.[0]?.startsWith("https")
+              ? product.image[0]
+              : `/uploads/${product.image?.[0] || "default.jpg"}`
+          }
+          alt={product.product_Name}
+          className="w-full h-60 object-cover mb-4 rounded"
+        />
+        <h4 className="font-semibold mb-1 text-sm md:text-base">
+          {product.product_Name}
+        </h4>
+        <p className="text-gray-500 text-xs mb-2">{product.decripation}</p>
+        <div className="text-base font-bold text-gray-800">
+          ₹{product.price}
+        </div>
+      </div>
+    ))}
+
+
         </div>
       </main>
 
