@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 
 // const isLocalhost = typeof window !== 'undefined' && window.location.hostname === 'localhost';
 
-const uri = 'https://server-222q.vercel.app/api/'
+const uri = 'https://server-222q.vercel.app/api'
 // 'https://server-88zz-cwzlqp0d4-shyams-projects-a087ff4a.vercel.app/api' 
 // isLocalhost
 //   ? 'http://localhost:3000/api'
