@@ -7,20 +7,24 @@ import Shop from './Component/Shop'
 import CartPage from './Component/Cart'
 import { Toaster } from "react-hot-toast";
 import SingleProduct from './Component/SingleProduct'
+import LoginPage from './Component/Login'
+import Register from './Component/Register'
 function App() {
 
   return (
     <>
-    <HashRouter>
+    {/* <HashRouter>
     <Navbar />
+    <Routes>
+    <Route path='/' element={<Home />} />
+    <Route path='/shop' element={<Shop />} />
+    <Route path='/product/:id' element={<SingleProduct />} />
+    <Route path='/cart' element={<CartPage />} />
+    </Routes>
+    </HashRouter> */}
     <Toaster position="top-right" reverseOrder={false} />
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/shop' element={<Shop />} />
-        <Route path='/product/:id' element={<SingleProduct />} />
-        <Route path='/cart' element={<CartPage />} />
-      </Routes>
-    </HashRouter>
+  <LoginPage />
+  {/* <Register /> */}
     </>
   )
 }
