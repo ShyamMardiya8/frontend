@@ -3,15 +3,16 @@ import { X, Filter } from "lucide-react";
 // import { categories, products } from "../constatnt/Products";
 import { GET_PRODUCTS } from "../controllers/functions";
 import { useNavigate } from "react-router-dom";
+import { AxiosResponse } from "axios";
 
 
 interface Product {
-  _id: string;
-  product_Name: string;
-  image: string[];
-  decripation: string;
-  price: string;
-  quantity: string;
+  _id?: string;
+  product_Name?: string;
+  image?: string[];
+  decripation?: string;
+  price?: string;
+  quantity?: string;
   category?: string;
 }
 
@@ -25,7 +26,7 @@ export default function Shop() {
   ? product.filter(product => product.category === selectedCategory)
   : product;
 
-  const categories = [...new Set(product.map(product => product.category))]; // Unique categories
+  const categories = [...new Set(product?.map(product => product?.category))]; // Unique categories
 
   console.log("cat", categories)
   const handleCategoryClick = (category: string) => {
@@ -33,8 +34,8 @@ export default function Shop() {
   };
 
   const fetchData = async  () => {
-    const response = await GET_PRODUCTS()
-    setProduct(response)
+    const response  = await GET_PRODUCTS()
+    setProduct(response?.data)
     console.log("product", response)
   }
 
@@ -102,7 +103,7 @@ export default function Shop() {
         </div>
 
         <div className="grid sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-6">
-        {filteredProducts.map((product, idx) => (
+        {filteredProducts?.map((product, idx) => (
       <div key={product._id || idx} className="border rounded-lg p-4 bg-white" onClick={() => handleClick(product._id)}>
         <img
           src={

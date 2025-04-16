@@ -11,10 +11,23 @@ import {
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { LOGIN_USER } from '../controllers/functions';
+import toast from 'react-hot-toast';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const handleLogin = async (payload : any) => {
+    const value = await LOGIN_USER(payload)
+    const {token} = value
+    localStorage.setItem("token", token)
+    console.log("value", value)
+    if (value) {
+      toast.success("success login")
+    }
+    else{
+      toast.error("something went wrong")
+    }
+  }
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -25,8 +38,7 @@ const Login = () => {
       password: Yup.string().min(6, 'Password must be at least 6 characters').required('Password is required'),
     }),
     onSubmit: (values) => {
-      console.log('Login submitted:', values);
-      // You can add your login logic here
+      handleLogin(values)
     },
   });
 
