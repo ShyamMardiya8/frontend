@@ -14,7 +14,7 @@ const uri = 'http://localhost:3000/api'
 
 const apiClient = axios.create({
 
-    baseURL: 'https://server-88zz-cwzlqp0d4-shyams-projects-a087ff4a.vercel.app/api',
+    baseURL: 'https://server-222q-o7s5lbt4k-shyams-projects-a087ff4a.vercel.app/api',
     headers: {
         "Content-Type": "Application/JSON"
     },
