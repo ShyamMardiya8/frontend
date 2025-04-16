@@ -3,7 +3,6 @@ import { X, Filter } from "lucide-react";
 // import { categories, products } from "../constatnt/Products";
 import { GET_PRODUCTS } from "../controllers/functions";
 import { useNavigate } from "react-router-dom";
-import { AxiosResponse } from "axios";
 
 
 interface Product {

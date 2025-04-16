@@ -8,7 +8,6 @@ import CartPage from './Component/Cart'
 import { Toaster } from "react-hot-toast";
 import SingleProduct from './Component/SingleProduct'
 import LoginPage from './Component/Login'
-import Register from './Component/Register'
 function App() {
 
   return (

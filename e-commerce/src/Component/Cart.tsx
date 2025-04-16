@@ -58,7 +58,7 @@ export default function CartPage() {
   const GET_CART_ITEM = async () => {
     const response = await GET_CART();
     // Convert quantity to number just in case it comes as string
-    const fixedResponse = response.map((item: any) => ({
+    const fixedResponse = [response]?.map((item: any) => ({
       ...item,
       quantity: Number(item.quantity) || 1,
     }));
