@@ -35,7 +35,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center gap-6 text-sm">
             {/* Shop with submenu */}
             <div className="relative group">
-              <button className="hover:underline">Shop</button>
+              <Link to='/shop' className="hover:underline">Shop</Link>
 
               {/* Submenu */}
               <div className="absolute top-full left-0 mt-2 w-40 bg-white shadow-lg rounded-md py-2 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-300 z-50">
@@ -51,15 +51,15 @@ const Navbar = () => {
               </div>
             </div>
 
-            <a href="#" className="hover:underline">
+            <Link to="/shop" className="hover:underline">
               On Sale
-            </a>
-            <a href="#" className="hover:underline">
+            </Link>
+            <Link to="/shop" className="hover:underline">
               New Arrivals
-            </a>
-            <a href="#" className="hover:underline">
+            </Link>
+            <Link to="/shop" className="hover:underline">
               Brands
-            </a>
+            </Link>
           </div>
         </div>
 
@@ -75,7 +75,7 @@ const Navbar = () => {
         {/* Icons */}
         <div className="flex items-center gap-4">
           <Link to='/cart'>
-          <ShoppingCart className="w-5 h-5 cursor-pointer" />
+          <ShoppingCart className="w-5 h-5 cursor-pointer cursor-pointer" />
           </Link>
           <User className="w-5 h-5 cursor-pointer" />
           <button
@@ -110,8 +110,8 @@ const Navbar = () => {
             </button>
 
             <nav className="mt-8 space-y-4 text-sm">
-              <details>
-                <summary className="cursor-pointer">Shop</summary>
+              {/* <details>
+                <Link to='/shop'  className="cursor-pointer">Shop</Link>
                 <div className="pl-4 mt-2 space-y-1 ">
                   {shopSubmenu.map((item, index) => (
                     <a
@@ -123,17 +123,17 @@ const Navbar = () => {
                     </a>
                   ))}
                 </div>
-              </details>
-
-              <a href="#" className="block">
+              </details> */}
+              <Link to='/shop' className="hover:underline block" onClick={() => setMenuOpen(false)}>Shop</Link>
+              <Link to="/shop" className="block" onClick={() => setMenuOpen(false)}>
                 On Sale
-              </a>
-              <a href="#" className="block">
+              </Link>
+              <Link to="/shop" className="block" onClick={() => setMenuOpen(false)}>
                 New Arrivals
-              </a>
-              <a href="#" className="block">
+              </Link>
+              <Link to="/shop" className="block" onClick={() => setMenuOpen(false)}>
                 Brands
-              </a>
+              </Link>
               <input
                 type="text"
                 placeholder="Search..."

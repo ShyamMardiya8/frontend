@@ -1,4 +1,4 @@
-import { HashRouter, Route, Routes } from 'react-router-dom'
+import { HashRouter, Link, Navigate, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Navbar from './Component/Navbar'
 import Home from './Component/Home'
@@ -8,8 +8,18 @@ import CartPage from './Component/Cart'
 import { Toaster } from "react-hot-toast";
 import SingleProduct from './Component/SingleProduct'
 import LoginPage from './Component/Login'
-function App() {
+import Register from './Component/Register'
+import { useEffect, useState } from 'react'
+import { GET_TOKEN } from './constatnt/LocalStorage'
 
+function App() {
+  const [auth, setAuth] = useState(false)
+  
+  useEffect(() => {
+    if (GET_TOKEN) {
+      setAuth(true)
+    }
+  },[])
   return (
     <>
     <HashRouter>
@@ -19,12 +29,11 @@ function App() {
     <Route path='/' element={<Home />} />
     <Route path='/shop' element={<Shop />} />
     <Route path='/product/:id' element={<SingleProduct />} />
-    <Route path='/cart' element={<CartPage />} />
+       <Route path='/cart' element={auth ? <CartPage /> : <Navigate to='/login'/>} /> 
     <Route path='/login' element={<LoginPage />} />
-
+    <Route path='/register' element={<Register />}/>
     </Routes>
     </HashRouter> 
-  {/* <Register /> */}
     </>
   )
 }

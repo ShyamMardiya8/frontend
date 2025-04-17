@@ -18,13 +18,34 @@ export default function CartPage() {
   const [cart, setCart] = useState<CartItem[]>([]);
 
   useEffect(() => {
-    GET_CART_ITEM();
+    fetchCartItems();
   }, []);
 
-  const DELETE_CART_ITEMS = async  (id : string) => {
-    const response = await DELETE_CART(id)
-    return response
-  }
+  const fetchCartItems = async () => {
+    try {
+      const response = await GET_CART();
+      console.log("response", response)
+      // Sanitize cart items
+      const fixedCart: CartItem[] = response?.data?.map((item: any) => ({
+        ...item,
+        quantity: Number(item.quantity) || 1,
+        price: String(item.price),
+      }));
+      setCart(fixedCart);
+    } catch (error) {
+      console.error("Error fetching cart items:", error);
+    }
+  };
+
+  const handleRemove = async (id: string) => {
+    try {
+      await DELETE_CART(id);
+      setCart((prev) => prev.filter((item) => item._id !== id));
+    } catch (error) {
+      console.error("Error deleting cart item:", error);
+    }
+  };
+
   const handleQuantity = (id: string, type: "inc" | "dec") => {
     setCart((prev) =>
       prev.map((item) =>
@@ -41,30 +62,13 @@ export default function CartPage() {
     );
   };
 
-  const handleRemove = (id: string) => {
-    setCart((prev) => prev.filter((item) => item._id !== id));
-    console.log("delete", id)
-    DELETE_CART_ITEMS(id)
-  };
-
   const subtotal = cart.reduce(
-    (acc, item) => acc + Number(item.price) * item.quantity,
+    (acc, item) => acc + parseFloat(item.price) * item.quantity,
     0
   );
   const discount = subtotal * 0.2;
   const deliveryFee = 15;
   const total = subtotal - discount + deliveryFee;
-
-  const GET_CART_ITEM = async () => {
-    const response = await GET_CART();
-    // Convert quantity to number just in case it comes as string
-    const fixedResponse = [response]?.map((item: any) => ({
-      ...item,
-      quantity: Number(item.quantity) || 1,
-    }));
-    setCart(fixedResponse);
-    console.log("cart item", fixedResponse);
-  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
@@ -87,7 +91,7 @@ export default function CartPage() {
                     {item.product_Name}
                   </h2>
                   <p className="text-lg font-semibold mt-1">
-                    ${item.price}
+                    ${parseFloat(item.price).toFixed(2)}
                   </p>
                 </div>
               </div>

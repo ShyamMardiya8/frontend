@@ -13,6 +13,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { LOGIN_USER } from '../controllers/functions';
 import toast from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -140,12 +141,12 @@ const Login = () => {
             sx={{ marginTop: '14px' }}
           >
             Don&apos;t have an account?{' '}
-            <a
-              href="/register"
+            <Link
+              to="/register"
               className="text-[#4f46e5] font-medium hover:underline"
             >
               Sign up
-            </a>
+            </Link>
           </Typography>
         </CardContent>
       </Card>
