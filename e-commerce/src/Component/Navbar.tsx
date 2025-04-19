@@ -16,7 +16,7 @@ const Navbar = () => {
       setAnimateSidebar(false);
     }
   }, [menuOpen]);
-
+  
   return (
     <>
       {/* Top Banner */}
@@ -36,19 +36,6 @@ const Navbar = () => {
             {/* Shop with submenu */}
             <div className="relative group">
               <Link to='/shop' className="hover:underline">Shop</Link>
-
-              {/* Submenu */}
-              <div className="absolute top-full left-0 mt-2 w-40 bg-white shadow-lg rounded-md py-2 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all duration-300 z-50">
-                {shopSubmenu.map((item, index) => (
-                  <a
-                    key={index}
-                    href="#"
-                    className="block px-4 py-2 hover:bg-gray-100 text-sm"
-                  >
-                    {item}
-                  </a>
-                ))}
-              </div>
             </div>
 
             <Link to="/shop" className="hover:underline">
@@ -130,9 +117,6 @@ const Navbar = () => {
               </Link>
               <Link to="/shop" className="block" onClick={() => setMenuOpen(false)}>
                 New Arrivals
-              </Link>
-              <Link to="/shop" className="block" onClick={() => setMenuOpen(false)}>
-                Brands
               </Link>
               <input
                 type="text"

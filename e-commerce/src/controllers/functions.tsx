@@ -3,18 +3,19 @@ import toast from "react-hot-toast";
 
 // const isLocalhost = typeof window !== 'undefined' && window.location.hostname === 'localhost';
 
-const uri = 'https://server-222q-o7s5lbt4k-shyams-projects-a087ff4a.vercel.app/api'
+const uri = 'https://server-222q-git-main-shyams-projects-a087ff4a.vercel.app/api'
 // 'https://server-222q.vercel.app/api'
 // 'https://server-88zz-cwzlqp0d4-shyams-projects-a087ff4a.vercel.app/api' 
 // isLocalhost
 //   ? 'http://localhost:3000/api'
+// 'https://server-222q-git-main-shyams-projects-a087ff4a.vercel.app/api'
 //   : ;
 
 
 
 const apiClient = axios.create({
 
-    baseURL: 'https://server-222q-o7s5lbt4k-shyams-projects-a087ff4a.vercel.app/api',
+    baseURL: 'https://server-222q-git-main-shyams-projects-a087ff4a.vercel.app/api',
     headers: {
         "Content-Type": "Application/JSON"
     },
@@ -46,6 +47,19 @@ apiClient.interceptors.response.use(
 export const LOGIN_USER = async (payload: any) => {
     try {
         const response = await axios.post(`${uri}/register`, payload)
+        return response.data
+    }
+    catch (err: any) {
+        console.log(err.message)
+    }
+}
+
+export const REGISTER_USER = async (payload: any) => {
+    try {
+        const response = await axios.post(`${uri}/user`, payload)
+        if (response.data) {
+            toast.success("register successfully", { position: "top-right" })
+        }
         return response.data
     }
     catch (err: any) {
@@ -108,6 +122,16 @@ export const DELETE_CART = async (id: any) => {
         return response.data
     }
     catch (err: any) {
+        console.log(err.message)
+    }
+}
+
+export const ORDER = async (payload: any) => {
+    try {
+        const response = await apiClient.post(`${uri}/post-address`, payload)
+        return response.data
+    }
+    catch (err : any) {
         console.log(err.message)
     }
 }

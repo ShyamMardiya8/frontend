@@ -12,11 +12,13 @@ import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { toast } from 'react-hot-toast';
+import { REGISTER_USER } from '../controllers/functions';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-
+  const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -34,9 +36,12 @@ const Register = () => {
         .oneOf([Yup.ref('password'), ''], 'Passwords do not match')
         .required('Please confirm your password'),
     }),
-    onSubmit: (values) => {
-      toast.success('Registered successfully!', { position: 'top-right' });
-      console.log(values);
+    onSubmit: (values, {resetForm}) => {
+     REGISTER_USER(values) 
+     resetForm()
+      setTimeout(() => {
+        navigate('/login')
+      },1000)
     },
   });
 

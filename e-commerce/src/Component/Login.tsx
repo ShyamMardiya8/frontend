@@ -13,10 +13,11 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { LOGIN_USER } from '../controllers/functions';
 import toast from 'react-hot-toast';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const Login = ({setAuth } : any) => {
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate()
   const handleLogin = async (payload : any) => {
     const value = await LOGIN_USER(payload)
     const {token} = value
@@ -24,6 +25,8 @@ const Login = () => {
     console.log("value", value)
     if (value) {
       toast.success("success login")
+      setAuth(true)
+      navigate('/shop')
     }
     else{
       toast.error("something went wrong")
