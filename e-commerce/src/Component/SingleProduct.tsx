@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { CheckCircle2, Minus, Plus, Star } from "lucide-react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { CREATE_CART, GET_PRODUCTS_BY_ID } from "../controllers/functions";
 import { reviews } from "../constatnt/Singel";
+import { GET_TOKEN } from "../constatnt/LocalStorage";
+import toast from "react-hot-toast";
 
 
 interface ProductType {
@@ -22,6 +24,7 @@ export default function SingleProduct() {
   const [quantity, setQuantity] = useState(1);
   const [tab, setTab] = useState("reviews");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const navigate = useNavigate()
 
   const GET_PRODUCTS_BY_ID_PAGE = async () => {
     if (!id) return;
@@ -45,9 +48,13 @@ export default function SingleProduct() {
       console.log("response", response)
   };
   const handleCart  = (single : any) => {
-    ADD_TO_CART(single);
-    
-    console.log("getting this data", single)
+    if (GET_TOKEN) {
+      ADD_TO_CART(single);
+    }
+    else{
+      toast.error("sign in first to product buy")
+      navigate('/login')
+    }
   }
   if (!single) return <div className="text-center py-10">Loading product...</div>;
 

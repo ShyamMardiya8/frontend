@@ -3,6 +3,7 @@ import { X, Filter } from "lucide-react";
 // import { categories, products } from "../constatnt/Products";
 import { GET_PRODUCTS } from "../controllers/functions";
 import { useNavigate } from "react-router-dom";
+import Footer from "./Footer";
 
 
 interface Product {
@@ -48,6 +49,7 @@ export default function Shop() {
     navigate(`/product/${id}`)
   }
   return (
+    <>
     <div className="flex flex-col lg:flex-row max-w-7xl mx-auto p-4">
       {/* Mobile Filter Button */}
       <div className="lg:hidden flex justify-between items-center mb-4">
@@ -135,5 +137,7 @@ export default function Shop() {
         ></div>
       )}
     </div>
+    <Footer />
+    </>
   );
 }

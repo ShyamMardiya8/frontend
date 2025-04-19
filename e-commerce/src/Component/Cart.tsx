@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { DELETE_CART, GET_CART } from "../controllers/functions";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 interface CartItem {
   _id: string;
@@ -14,23 +16,33 @@ interface CartItem {
   color?: string;
 }
 
-export default function CartPage() {
+export default function CartPage({ setOrder, order }: any) {
   const [cart, setCart] = useState<CartItem[]>([]);
+  const [check, setCheck] = useState<Boolean>(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCartItems();
   }, []);
 
+  // This will sync the updated cart with the parent setOrder function
+  useEffect(() => {
+    setOrder(cart);
+  }, [cart]);
+
   const fetchCartItems = async () => {
     try {
       const response = await GET_CART();
-      console.log("response", response)
-      // Sanitize cart items
+      const cartLength = response?.data.length;
+      cartLength > 0 ? setCheck(false) : setCheck(true);
+
       const fixedCart: CartItem[] = response?.data?.map((item: any) => ({
         ...item,
         quantity: Number(item.quantity) || 1,
         price: String(item.price),
       }));
+
       setCart(fixedCart);
     } catch (error) {
       console.error("Error fetching cart items:", error);
@@ -69,6 +81,14 @@ export default function CartPage() {
   const discount = subtotal * 0.2;
   const deliveryFee = 15;
   const total = subtotal - discount + deliveryFee;
+
+  const handleCheckOut = () => {
+    if (!check) {
+      navigate("/order");
+    } else {
+      toast.error("Your cart is empty", { position: "top-right" });
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
@@ -153,7 +173,10 @@ export default function CartPage() {
             </button>
           </div>
 
-          <button className="w-full bg-black text-white rounded-full py-3 mt-4 font-medium flex items-center justify-center gap-2">
+          <button
+            className="cursor-pointer w-full bg-black text-white rounded-full py-3 mt-4 font-medium flex items-center justify-center gap-2"
+            onClick={handleCheckOut}
+          >
             Go to Checkout →
           </button>
         </div>
@@ -161,3 +184,4 @@ export default function CartPage() {
     </div>
   );
 }
+  
