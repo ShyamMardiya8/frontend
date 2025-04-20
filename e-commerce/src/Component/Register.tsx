@@ -11,7 +11,6 @@ import {
 import { Mail, Lock, Eye, EyeOff } from 'lucide-react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { toast } from 'react-hot-toast';
 import { REGISTER_USER } from '../controllers/functions';
 import { useNavigate } from 'react-router-dom';
 

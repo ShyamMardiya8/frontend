@@ -16,7 +16,7 @@ interface CartItem {
   color?: string;
 }
 
-export default function CartPage({ setOrder, order }: any) {
+export default function CartPage({ setOrder }: any) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [check, setCheck] = useState<Boolean>(false);
 

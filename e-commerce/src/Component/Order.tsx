@@ -1,9 +1,8 @@
-import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { TextField, Button, Radio, RadioGroup, FormControlLabel } from "@mui/material";
 import { User, Mail, Home, MapPin, Phone } from "lucide-react";
-import { SiPaytm, SiGooglepay } from "react-icons/si";
+import { SiGooglepay } from "react-icons/si";
 import { FaMoneyBillAlt } from "react-icons/fa";
 import { ORDER } from "../controllers/functions";
 import toast from "react-hot-toast";

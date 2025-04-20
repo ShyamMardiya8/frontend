@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { Menu, X, ShoppingCart, User } from "lucide-react";
-import { shopSubmenu } from "../constatnt/value";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
